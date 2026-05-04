@@ -16,7 +16,7 @@ export const registerUser = async (req, res) => {
             return res.json({success: false, message: 'fill all the fields'})
         }
 
-        const useExist = await User.findOne({email})
+        const userExist = await User.findOne({email})
         if(userExist){
             return res.json({success: false, message: 'User already exists'})
         }
@@ -41,7 +41,7 @@ export const loginUser = async (req, res) => {
         }
         const isMatch = await bcrypt.compare(password, user.password)
         if(!isMatch){
-            res.json({success: false, message: "Invalid Credentials"})
+            res.json({success: false, message: "Incorrect password"})
         }
         const token = generateToken(user._id.toString())
         res.json({success: true, token})
